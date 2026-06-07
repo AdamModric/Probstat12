@@ -1,0 +1,20 @@
+---
+title: "Laporan"
+format: html
+editor: visual
+---
+
+# BAB I PENDAHULUAN
+### 1.1 Latar Belakang
+
+xixixi
+
+### 1.2 Tujuan
+
+xixixi
+
+# BAB II METODOLOGI
+### Dataset
+```{r}
+1 + 1
+```
