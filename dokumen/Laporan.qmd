@@ -429,7 +429,8 @@ qqline(data$kemiskinan,
 
 Interpretasi:
 
-Jika titik-titik mengikuti garis diagonal maka distribusi mendekati normal. Sebaliknya, penyimpangan yang cukup jauh dari garis menunjukkan data tidak berdistribusi normal.
+Jika titik-titik mengikuti garis diagonal maka distribusi mendekati normal. 
+Sebaliknya, penyimpangan yang cukup jauh dari garis menunjukkan data tidak berdistribusi normal.
 
 ---
 
@@ -456,7 +457,8 @@ cor.test(data$ipm,
 
 Interpretasi:
 
-Hubungan antara IPM dan kemiskinan umumnya bersifat negatif. Semakin tinggi nilai IPM suatu wilayah, maka tingkat kemiskinannya cenderung semakin rendah.
+Hubungan antara IPM dan kemiskinan umumnya bersifat negatif. Semakin tinggi nilai IPM suatu wilayah, 
+maka tingkat kemiskinannya cenderung semakin rendah.
 
 ### Korelasi Akses Internet dan Pendidikan
 
@@ -467,7 +469,8 @@ cor.test(data$akses_internet,
 
 Interpretasi:
 
-Hubungan positif menunjukkan bahwa wilayah dengan akses internet yang lebih baik cenderung memiliki rata-rata lama sekolah yang lebih tinggi.
+Hubungan positif menunjukkan bahwa wilayah dengan akses internet yang 
+lebih baik cenderung memiliki rata-rata lama sekolah yang lebih tinggi.
 
 ### Korelasi PDRB Per Kapita dan IPM
 
@@ -478,6 +481,8 @@ cor.test(data$pdrb_perkapita,
 
 Interpretasi:
 
-Hubungan positif menunjukkan bahwa peningkatan tingkat kesejahteraan ekonomi cenderung diikuti oleh peningkatan kualitas pembangunan manusia yang tercermin melalui nilai IPM.
+Hubungan positif menunjukkan bahwa peningkatan tingkat kesejahteraan ekonomi
+cenderung diikuti oleh peningkatan kualitas pembangunan manusia yang tercermin melalui nilai IPM.
 
-Secara umum, hasil korelasi menunjukkan bahwa indikator ekonomi, pendidikan, dan teknologi saling berkaitan dalam mendukung pembangunan wilayah yang lebih baik.
+Secara umum, hasil korelasi menunjukkan bahwa indikator ekonomi, pendidikan, 
+dan teknologi saling berkaitan dalam mendukung pembangunan wilayah yang lebih baik.
