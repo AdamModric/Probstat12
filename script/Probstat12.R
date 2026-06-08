@@ -301,6 +301,51 @@ ggplot(data, aes(x = air_bersih)) +
 
 #analisis korelasi
 
+
+#Matriks korelasi
+korelasi <- cor(data_num, use = "complete.obs", method = "pearson")
+korelasi
+
+#IPM DAN KEMISKINAN
+cor(data$ipm, data$kemiskinan, use = "complete.obs")
+cor.test(data$ipm, data$kemiskinan)
+
+ggplot(data,
+       aes(x = kemiskinan,
+           y = ipm)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm",
+              se = FALSE,
+              color = "red") +
+  labs(
+    title = "Hubungan IPM dan Kemiskinan",
+    x = "Kemiskinan (%)",
+    y = "IPM"
+  ) +
+  theme_minimal()
+
+#AKSES INTERNET DAN PENDIDIKAN
+cor(data$akses_internet, data$rata_lama_sekolah, use = "complete.obs")
+cor.test( data$akses_internet, data$rata_lama_sekolah)
+
+ggplot(data,
+       aes(x = akses_internet,
+           y = rata_lama_sekolah)) +
+  geom_point(color = "darkgreen") +
+  geom_smooth(method = "lm",
+              se = FALSE,
+              color = "red") +
+  labs(
+    title = "Hubungan Akses Internet dan Pendidikan",
+    x = "Akses Internet (%)",
+    y = "Rata-rata Lama Sekolah"
+  ) +
+  theme_minimal()
+
+#PDRB dan IPM
+cor(data$pdrb_perkapita, data$ipm, use = "complete.obs")
+cor.test(data$pdrb_perkapita, data$ipm)
+
 ggplot(data,
        aes(x = pdrb_perkapita,
            y = ipm)) +
