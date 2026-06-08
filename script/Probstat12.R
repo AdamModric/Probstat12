@@ -226,3 +226,91 @@ hasil_normalitas <- data.frame(
 )
 
 hasil_normalitas
+
+# Q-Q Plot Kemiskinan
+
+qqnorm(data$kemiskinan, main = "Q-Q Plot Uji Normalitas Kemiskinan")
+qqline(data$kemiskinan, col = "red")
+
+
+# PROBABILITAS AKSES INTERNET > 50%
+
+mean_internet <- mean(data$akses_internet, na.rm = TRUE)
+sd_internet <- sd(data$akses_internet,na.rm = TRUE)
+jumlah_diatas50 <- sum(data$akses_internet > 50,na.rm = TRUE)
+total_wilayah <- sum(!is.na(data$akses_internet))
+prob_internet <- jumlah_diatas50 / total_wilayah
+persentase <- prob_internet * 100
+
+cat("Rata-rata Akses Internet :", round(mean_internet, 2), "\n")
+cat("Jumlah Wilayah di Atas 50% :", jumlah_diatas50, "\n")
+cat("Total Wilayah :", total_wilayah, "\n")
+cat("Probabilitas :", round(prob_internet,4), "\n")
+cat("Persentase :", round(persentase,2), "%")
+
+ggplot(data, aes(x = akses_internet)) +
+  geom_histogram(
+    bins = 20,
+    fill = "skyblue",
+    color = "black"
+  ) +
+  geom_vline(
+    xintercept = 50,
+    linetype = "dashed",
+    linewidth = 1
+  ) +
+  labs(
+    title = "Distribusi Akses Internet",
+    x = "Akses Internet (%)",
+    y = "Frekuensi"
+  ) +
+  theme_minimal()
+
+
+# PROBABILITAS AKSES AIR BERSIH DI ATAS RATA-RATA
+
+mean_air_bersih <- mean(data$air_bersih,na.rm = TRUE)
+jumlah_diatas_rata <- sum(data$air_bersih > mean_air_bersih,na.rm = TRUE)
+total_wilayah <- sum(!is.na(data$air_bersih))
+prob_air_bersih <- jumlah_diatas_rata / total_wilayah
+persen_prob <- prob_air_bersih * 100
+
+cat("Rata-rata Akses Air Bersih :", round(mean_air_bersih,2), "\n")
+cat("Jumlah Wilayah di Atas Rata-rata :", jumlah_diatas_rata, "\n")
+cat("Total Wilayah :", total_wilayah, "\n")
+cat("Probabilitas :", round(prob_air_bersih,4), "\n")
+cat("Persentase :", round(persen_prob,2), "%")
+
+ggplot(data, aes(x = air_bersih)) +
+  geom_histogram(
+    bins = 20,
+    fill = "skyblue",
+    color = "black"
+  ) +
+  geom_vline(
+    xintercept = mean_air_bersih,
+    color = "red",
+    linewidth = 1
+  ) +
+  labs(
+    title = "Distribusi Akses Air Bersih",
+    x = "Akses Air Bersih (%)",
+    y = "Frekuensi"
+  ) +
+  theme_minimal()
+
+#analisis korelasi
+
+ggplot(data,
+       aes(x = pdrb_perkapita,
+           y = ipm)) +
+  geom_point(color = "purple") +
+  geom_smooth(method = "lm",
+              se = FALSE,
+              color = "red") +
+  labs(
+    title = "Hubungan PDRB Per Kapita dan IPM",
+    x = "PDRB Per Kapita",
+    y = "IPM"
+  ) +
+  theme_minimal()
