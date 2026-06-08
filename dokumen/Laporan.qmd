@@ -4,6 +4,22 @@ format:
   pdf:
     toc: true
 ---
+# ANALISIS DATA PEMBANGUNAN WILAYAH MENGGUNAKAN R
+
+## Disusun oleh:
+
+1. Adam Mudrika Malik (J0403251079)
+2. Mufidah Ziyanisa (J0403251014)
+3. Kenny Immanuel (23XXXXXXXX)
+
+### Mata Kuliah
+Probabilitas dan Statistika
+
+### Program Studi
+D4 Teknologi Rekayasa Perangkat Lunak
+
+### Tahun Akademik
+2025/2026
 
 # BAB I PENDAHULUAN
 
