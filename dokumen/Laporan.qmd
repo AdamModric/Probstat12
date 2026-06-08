@@ -351,6 +351,28 @@ Terdapat kecenderungan hubungan positif antara tingkat kemiskinan dan tingkat pe
 ### Diagram Batang Rata-rata Indikator Pembangunan
 
 ```{r}
+rata_rata <- data.frame(
+  Variabel = c(
+    "Kemiskinan",
+    "Pengangguran",
+    "IPM",
+    "Harapan Hidup",
+    "Internet",
+    "Jalan Baik",
+    "Air Bersih"
+  ),
+  Mean = c(
+    mean(data$kemiskinan, na.rm = TRUE),
+    mean(data$pengangguran, na.rm = TRUE),
+    mean(data$ipm, na.rm = TRUE),
+    mean(data$harapan_hidup, na.rm = TRUE),
+    mean(data$akses_internet, na.rm = TRUE),
+    mean(data$jalan_baik, na.rm = TRUE),
+    mean(data$air_bersih, na.rm = TRUE)
+  )
+)
+
+rata_rata
 ggplot(rata_rata,
        aes(x = Variabel,
            y = Mean)) +
@@ -363,6 +385,16 @@ Diagram menunjukkan perbandingan nilai rata-rata antarindikator pembangunan sehi
 ### Diagram Lingkaran Status Data
 
 ```{r}
+status <- as.data.frame(table(data$catatan_data))
+
+status$Persentase <- round(
+  (status$Freq / sum(status$Freq)) * 100,
+  1
+)
+
+status$Label <- paste0(status$Persentase, "%")
+
+status
 ggplot(status,
        aes(x = "",
            y = Freq,
@@ -380,6 +412,17 @@ Diagram lingkaran menunjukkan proporsi status data berdasarkan kategori yang ter
 Uji normalitas dilakukan menggunakan metode Shapiro-Wilk.
 
 ```{r}
+data_num <- data[sapply(data, is.numeric)]
+
+hasil_normalitas <- data.frame(
+  Variabel = names(data_num),
+  P_Value = sapply(
+    data_num,
+    function(x) shapiro.test(na.omit(x))$p.value
+  )
+)
+
+hasil_normalitas
 hasil_normalitas
 ```
 Berdasarkan hasil uji Shapiro-Wilk, nilai p-value pada masing-masing variabel dibandingkan dengan tingkat signifikansi 0,05.
