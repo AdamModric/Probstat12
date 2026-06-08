@@ -1,20 +1,191 @@
 ---
-title: "Analisis Deskriptif dan Probabilitas Indikator Pembangunan Wilayah di Indonesia"
-format: html
-editor: visual
+title: "Laporan"
+format:
+  pdf:
+    toc: true
 ---
 
 # BAB I PENDAHULUAN
+
 ### 1.1 Latar Belakang
 
-xixixi
+Pembangunan wilayah merupakan salah satu indikator penting dalam mengukur tingkat kesejahteraan masyarakat dan kemajuan suatu daerah. Berbagai aspek pembangunan dapat diamati melalui indikator ekonomi, sosial, pendidikan, kesehatan, serta infrastruktur. Analisis terhadap indikator-indikator tersebut diperlukan untuk mengetahui kondisi pembangunan suatu wilayah dan mengidentifikasi faktor-faktor yang memengaruhinya.
+
+Perkembangan teknologi informasi memungkinkan pengolahan dan analisis data dilakukan secara lebih efektif. Dengan memanfaatkan metode statistika dan probabilitas, data dapat diolah menjadi informasi yang berguna untuk mendukung pengambilan keputusan. Salah satu perangkat lunak yang banyak digunakan dalam analisis data adalah R karena memiliki kemampuan yang baik dalam pengolahan data, visualisasi, serta analisis statistik.
+
+Pada proyek ini digunakan dataset pembangunan wilayah yang berisi berbagai indikator seperti PDRB per kapita, tingkat kemiskinan, tingkat pengangguran, Indeks Pembangunan Manusia (IPM), harapan hidup, rata-rata lama sekolah, akses internet, kondisi jalan baik, dan akses air bersih. Dataset tersebut juga mengandung missing value dan outlier sehingga memberikan kesempatan untuk menerapkan teknik pengolahan data yang sesuai sebelum dilakukan analisis lebih lanjut. Melalui analisis ini diharapkan dapat diperoleh pemahaman yang lebih baik mengenai kondisi pembangunan wilayah serta hubungan antar variabel yang terdapat dalam dataset.
 
 ### 1.2 Tujuan
 
-xixixi
+- Memahami struktur dan karakteristik dataset pembangunan wilayah.
+- Melakukan eksplorasi data menggunakan bahasa pemrograman R.
+- Mengidentifikasi dan menangani missing value pada dataset.
+- Mengidentifikasi dan menganalisis outlier pada data.
+- Melakukan analisis statistika deskriptif terhadap variabel numerik.
+- Membuat visualisasi data yang informatif dan mudah dipahami.
+- Menganalisis distribusi data dan probabilitas sederhana.
+- Menghitung serta menginterpretasikan korelasi antar variabel.
+- Menarik kesimpulan dan memperoleh insight berdasarkan hasil analisis data pembangunan wilayah.
 
 # BAB II METODOLOGI
-### Dataset
+
+## 2.1 Dataset
+
+Dataset yang digunakan dalam penelitian ini adalah **pembangunan_wilayah_missing_outlier.csv** yang berisi data indikator pembangunan wilayah di Indonesia. Dataset tersebut memuat berbagai variabel sosial, ekonomi, pendidikan, kesehatan, dan infrastruktur yang digunakan untuk menggambarkan kondisi pembangunan suatu wilayah.
+
+Variabel yang terdapat dalam dataset meliputi wilayah, provinsi, tahun pengamatan, PDRB per kapita, tingkat kemiskinan, tingkat pengangguran, Indeks Pembangunan Manusia (IPM), harapan hidup, rata-rata lama sekolah, akses internet, kondisi jalan baik, dan akses air bersih. Selain itu, dataset juga mengandung missing value dan outlier yang digunakan untuk menerapkan teknik pembersihan dan pengolahan data.
+
 ```{r}
-1 + 1
+data <- read.csv("dataset/pembangunan_wilayah_missing_outlier.csv")
+head(data)
+str(data)
+dim(data)
 ```
+
+Berdasarkan hasil fungsi `dim()`, dataset terdiri dari 2.500 observasi dan 13 variabel. Variabel `wilayah`, `provinsi`, dan `catatan_data` bertipe karakter, sedangkan variabel lainnya bertipe numerik yang digunakan dalam analisis statistik.
+
+## 2.2 Tools yang Digunakan
+
+Analisis data pada penelitian ini dilakukan menggunakan beberapa perangkat lunak dan pustaka (library) yang mendukung proses pengolahan, analisis, dan visualisasi data. Adapun tools yang digunakan adalah sebagai berikut:
+
+### 2.2.1 R
+
+R merupakan bahasa pemrograman yang banyak digunakan dalam bidang statistika, data science, dan analisis data. R menyediakan berbagai fungsi untuk melakukan pengolahan data, perhitungan statistik, visualisasi, serta pemodelan data secara efisien.
+
+### 2.2.2 RStudio
+
+RStudio merupakan Integrated Development Environment (IDE) yang dirancang untuk mempermudah penggunaan bahasa pemrograman R. RStudio menyediakan fitur penulisan kode, manajemen proyek, visualisasi grafik, dan pembuatan laporan secara terintegrasi.
+
+### 2.2.3 Quarto
+
+Quarto digunakan sebagai alat untuk menyusun laporan analisis data dalam format yang terstruktur dan reproducible. Quarto memungkinkan penggabungan teks, kode program R, output analisis, tabel, dan grafik dalam satu dokumen sehingga hasil analisis dapat didokumentasikan secara sistematis.
+
+### 2.2.4Library dplyr
+
+Library **dplyr** digunakan untuk mempermudah proses manipulasi dan transformasi data. Beberapa fungsi yang digunakan antara lain untuk melakukan pemilihan variabel, penyaringan data, serta pengolahan data sebelum dilakukan analisis statistik.
+
+### 2.2.5 Library ggplot2
+
+Library **ggplot2** digunakan untuk membuat visualisasi data yang informatif dan mudah dipahami. Library ini menyediakan berbagai jenis grafik yang dapat digunakan untuk mengeksplorasi pola data, distribusi data, serta hubungan antar variabel.
+
+### 2.2.6 Dataset Pembangunan Wilayah
+
+Dataset yang digunakan adalah **pembangunan_wilayah_missing_outlier.csv**, yang berisi berbagai indikator pembangunan wilayah seperti PDRB per kapita, tingkat kemiskinan, tingkat pengangguran, IPM, harapan hidup, rata-rata lama sekolah, akses internet, kondisi jalan baik, dan akses air bersih. Dataset ini digunakan sebagai objek utama dalam seluruh proses analisis.
+
+## 3.3 Metode Analisis
+
+### 3.3.1 Analisis Statistika Deskriptif
+
+Statistika deskriptif digunakan untuk menggambarkan karakteristik umum data melalui ukuran pemusatan dan penyebaran data. Analisis ini bertujuan memberikan gambaran awal mengenai kondisi data sebelum dilakukan analisis lebih lanjut.
+
+Pada penelitian ini, statistika deskriptif dihitung menggunakan fungsi `summary()`, `mean()`, `median()`, `quantile()`, `sd()`, dan `var()` pada seluruh variabel numerik.
+
+```{r}
+data_num <- data[sapply(data, is.numeric)]
+summary(data_num) 
+```
+
+Fungsi `summary()` menghasilkan informasi berupa nilai minimum, kuartil pertama (Q1), median, rata-rata (mean), kuartil ketiga (Q3), dan maksimum untuk setiap variabel numerik. Hasil ini digunakan untuk mengetahui karakteristik dasar data serta mendeteksi kemungkinan adanya nilai ekstrem.
+
+Selanjutnya dilakukan perhitungan mean, median, standar deviasi, varians, dan kuartil untuk memperoleh informasi yang lebih rinci mengenai pusat dan penyebaran data.
+
+### 3.3.2 Analisis Missing Value
+
+Analisis missing value dilakukan untuk mengidentifikasi keberadaan data yang hilang pada dataset. Missing value dapat menyebabkan hasil analisis menjadi bias apabila tidak ditangani dengan tepat.
+
+Identifikasi missing value dilakukan menggunakan fungsi `is.na()` dan `colSums()`.
+
+```{r}
+total_missing <- sum(is.na(data_num));
+missing_value <- data.frame(
+  Missing = colSums(is.na(data_num))
+)
+```
+
+Fungsi `is.na()` digunakan untuk mendeteksi nilai yang hilang, sedangkan `colSums()` digunakan untuk menghitung jumlah missing value pada setiap variabel.
+
+Hasil analisis menunjukkan bahwa terdapat beberapa variabel yang memiliki missing value sehingga diperlukan proses penanganan data.
+
+Penanganan missing value dilakukan menggunakan metode **Median Imputation**, yaitu mengganti nilai yang hilang dengan nilai median dari variabel terkait.
+
+```{r}
+for(i in names(data_num)){   data[[i]][is.na(data[[i]])] <- median(data[[i]], na.rm = TRUE) } 
+```
+
+Metode median dipilih karena lebih robust terhadap outlier dibandingkan metode mean imputation.
+
+### 3.3.3 Analisis Outlier
+
+Outlier merupakan data yang memiliki nilai jauh berbeda dibandingkan mayoritas data lainnya. Analisis outlier dilakukan menggunakan metode **Interquartile Range (IQR)**.
+
+Metode IQR dipilih karena sederhana, mudah diinterpretasikan, dan tidak terlalu sensitif terhadap distribusi data.
+
+Rumus yang digunakan adalah:
+
+- IQR = Q3 − Q1
+
+- Batas bawah = Q1 − 1,5 × IQR
+
+- Batas atas = Q3 + 1,5 × IQR
+
+Implementasi metode IQR dalam R dilakukan menggunakan fungsi `IQR()` dan `quantile()`.
+
+```{r}
+IQR_PDRB <- IQR(data$pdrb_perkapita, na.rm = TRUE) 
+```
+
+Fungsi `IQR()` digunakan untuk menghitung rentang antar kuartil, sedangkan `quantile()` digunakan untuk memperoleh nilai kuartil pertama dan kuartil ketiga.
+
+Selain menggunakan metode IQR, identifikasi outlier juga dilakukan secara visual menggunakan boxplot.
+
+```{r}
+boxplot(data$pdrb_perkapita) 
+```
+
+Boxplot digunakan untuk menampilkan distribusi data dan menunjukkan observasi yang berada di luar batas normal sebagai outlier.
+
+Hasil analisis menunjukkan bahwa terdapat sejumlah outlier pada variabel PDRB per kapita, kemiskinan, dan pengangguran.
+
+### 3.3.4 Analisis Visualisasi Data
+
+Visualisasi data dilakukan untuk mempermudah pemahaman terhadap pola dan karakteristik data.
+
+Visualisasi dibuat menggunakan package `ggplot2`.
+
+Histogram digunakan untuk melihat distribusi data.
+
+```{r}
+library(dplyr)
+library(ggplot2)
+ggplot(data, aes(x = pdrb_perkapita)) +   geom_histogram() 
+```
+
+Hasil histogram menunjukkan persebaran nilai PDRB per kapita pada seluruh wilayah pengamatan.
+
+Scatter plot digunakan untuk melihat hubungan antara tingkat kemiskinan dan pengangguran.
+
+```{r}
+ggplot(data,        aes(x = kemiskinan,            y = pengangguran)) +   geom_point() 
+```
+
+Grafik ini menunjukkan pola hubungan antara kedua variabel sehingga dapat digunakan sebagai dasar analisis hubungan antar indikator pembangunan.
+
+Bar chart digunakan untuk membandingkan rata-rata indikator pembangunan, sedangkan pie chart digunakan untuk melihat proporsi kategori pada variabel `catatan_data`.
+
+### 3.3.5 Analisis Distribusi Data
+
+Analisis distribusi data dilakukan menggunakan **Uji Normalitas Shapiro-Wilk**. Tujuan pengujian ini adalah untuk mengetahui apakah data mengikuti distribusi normal atau tidak.
+
+Implementasi dilakukan menggunakan fungsi `shapiro.test()`.
+
+```{r}
+shapiro.test(data$pdrb_perkapita) 
+```
+
+Fungsi tersebut menghasilkan nilai statistik W dan p-value. Nilai p-value digunakan sebagai dasar pengambilan keputusan.
+
+- Jika p-value \> 0,05 maka data dianggap berdistribusi normal.
+
+- Jika p-value ≤ 0,05 maka data dianggap tidak berdistribusi normal.
+
+Hasil pengujian digunakan untuk menentukan kesesuaian metode statistik yang akan digunakan pada analisis lanjutan.
