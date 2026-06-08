@@ -1,240 +1,148 @@
 ---
-title: "Laporan"
-format:
-  pdf:
-    toc: true
+output:
+  word_document: default
+  html_document: default
 ---
-# ANALISIS DATA PEMBANGUNAN WILAYAH MENGGUNAKAN R
+---
+title: ""
+format:
+pdf:
+toc: true
+toc-depth: 3
+number-sections: true
+colorlinks: true
+geometry:
+- top=3cm
+- bottom=3cm
+- left=3cm
+- right=3cm
+-----------
 
-## Disusun oleh:
+\begin{center}
 
-1. Adam Mudrika Malik (J0403251079)
-2. Mufidah Ziyanisa (J0403251014)
-3. Kenny Immanuel (23XXXXXXXX)
+\includegraphics[width=3cm]{LOGO.png}
 
-### Mata Kuliah
-Probabilitas dan Statistika
+\vspace{1cm}
 
-### Program Studi
-D4 Teknologi Rekayasa Perangkat Lunak
+{\Large \textbf{LAPORAN PROYEK AKHIR}} \
 
-### Tahun Akademik
-2025/2026
+\vspace{0.5cm}
+
+{\Large \textbf{ANALISIS DATA PEMBANGUNAN WILAYAH MENGGUNAKAN R}}
+
+\vspace{1.5cm}
+
+Disusun oleh:
+
+\vspace{0.5cm}
+
+\begin{tabular}{ll}
+Adam Mudrika Malik & J0403251079 \
+Mufidah Ziyanisa & J0403251014 \
+Kenny Immanuel & J0403241012 \
+\end{tabular}
+
+\vspace{1.5cm}
+
+Mata Kuliah Probabilitas dan Statistika
+
+Program Studi D4 Teknologi Rekayasa Perangkat Lunak
+
+\vspace{1cm}
+
+Fakultas Vokasi
+
+Institut Pertanian Bogor
+
+\vspace{1cm}
+
+Tahun Akademik 2025/2026
+
+\end{center}
+
+\newpage
 
 # BAB I PENDAHULUAN
 
-### 1.1 Latar Belakang
+## 1.1 Latar Belakang
 
 Pembangunan wilayah merupakan salah satu indikator penting dalam mengukur tingkat kesejahteraan masyarakat dan kemajuan suatu daerah. Berbagai aspek pembangunan dapat diamati melalui indikator ekonomi, sosial, pendidikan, kesehatan, serta infrastruktur. Analisis terhadap indikator-indikator tersebut diperlukan untuk mengetahui kondisi pembangunan suatu wilayah dan mengidentifikasi faktor-faktor yang memengaruhinya.
 
 Perkembangan teknologi informasi memungkinkan pengolahan dan analisis data dilakukan secara lebih efektif. Dengan memanfaatkan metode statistika dan probabilitas, data dapat diolah menjadi informasi yang berguna untuk mendukung pengambilan keputusan. Salah satu perangkat lunak yang banyak digunakan dalam analisis data adalah R karena memiliki kemampuan yang baik dalam pengolahan data, visualisasi, serta analisis statistik.
 
-Pada proyek ini digunakan dataset pembangunan wilayah yang berisi berbagai indikator seperti PDRB per kapita, tingkat kemiskinan, tingkat pengangguran, Indeks Pembangunan Manusia (IPM), harapan hidup, rata-rata lama sekolah, akses internet, kondisi jalan baik, dan akses air bersih. Dataset tersebut juga mengandung missing value dan outlier sehingga memberikan kesempatan untuk menerapkan teknik pengolahan data yang sesuai sebelum dilakukan analisis lebih lanjut. Melalui analisis ini diharapkan dapat diperoleh pemahaman yang lebih baik mengenai kondisi pembangunan wilayah serta hubungan antar variabel yang terdapat dalam dataset.
+Pada proyek ini digunakan dataset pembangunan wilayah yang berisi berbagai indikator seperti PDRB per kapita, tingkat kemiskinan, tingkat pengangguran, Indeks Pembangunan Manusia (IPM), harapan hidup, rata-rata lama sekolah, akses internet, kondisi jalan baik, dan akses air bersih. Dataset tersebut juga mengandung missing value dan outlier sehingga memberikan kesempatan untuk menerapkan teknik pengolahan data yang sesuai sebelum dilakukan analisis lebih lanjut.
 
-### 1.2 Tujuan
+Melalui analisis ini diharapkan dapat diperoleh pemahaman yang lebih baik mengenai kondisi pembangunan wilayah serta hubungan antar variabel yang terdapat dalam dataset.
 
-- Memahami struktur dan karakteristik dataset pembangunan wilayah.
-- Melakukan eksplorasi data menggunakan bahasa pemrograman R.
-- Mengidentifikasi dan menangani missing value pada dataset.
-- Mengidentifikasi dan menganalisis outlier pada data.
-- Melakukan analisis statistika deskriptif terhadap variabel numerik.
-- Membuat visualisasi data yang informatif dan mudah dipahami.
-- Menganalisis distribusi data dan probabilitas sederhana.
-- Menghitung serta menginterpretasikan korelasi antar variabel.
-- Menarik kesimpulan dan memperoleh insight berdasarkan hasil analisis data pembangunan wilayah.
+## 1.2 Tujuan
+
+Tujuan dari analisis ini adalah:
+
+* Memahami struktur dan karakteristik dataset pembangunan wilayah.
+* Melakukan eksplorasi data menggunakan bahasa pemrograman R.
+* Mengidentifikasi dan menangani missing value pada dataset.
+* Mengidentifikasi dan menganalisis outlier pada data.
+* Melakukan analisis statistika deskriptif terhadap variabel numerik.
+* Membuat visualisasi data yang informatif dan mudah dipahami.
+* Menganalisis distribusi data dan probabilitas sederhana.
+* Menghitung serta menginterpretasikan korelasi antar variabel.
+* Menarik kesimpulan dan memperoleh insight berdasarkan hasil analisis data pembangunan wilayah.
 
 # BAB II METODOLOGI
 
 ## 2.1 Dataset
 
-Dataset yang digunakan dalam penelitian ini adalah **pembangunan_wilayah_missing_outlier.csv** yang berisi data indikator pembangunan wilayah di Indonesia. Dataset tersebut memuat berbagai variabel sosial, ekonomi, pendidikan, kesehatan, dan infrastruktur yang digunakan untuk menggambarkan kondisi pembangunan suatu wilayah.
+Dataset yang digunakan dalam penelitian ini adalah **pembangunan_wilayah_missing_outlier.csv** yang berisi data indikator pembangunan wilayah di Indonesia.
 
-Variabel yang terdapat dalam dataset meliputi wilayah, provinsi, tahun pengamatan, PDRB per kapita, tingkat kemiskinan, tingkat pengangguran, Indeks Pembangunan Manusia (IPM), harapan hidup, rata-rata lama sekolah, akses internet, kondisi jalan baik, dan akses air bersih. Selain itu, dataset juga mengandung missing value dan outlier yang digunakan untuk menerapkan teknik pembersihan dan pengolahan data.
+Variabel yang terdapat dalam dataset meliputi wilayah, provinsi, tahun pengamatan, PDRB per kapita, tingkat kemiskinan, tingkat pengangguran, IPM, harapan hidup, rata-rata lama sekolah, akses internet, kondisi jalan baik, dan akses air bersih.
 
 ```{r}
-data <- read.csv("dataset/pembangunan_wilayah_missing_outlier.csv")
+data <- read.csv("pembangunan_wilayah_missing_outlier.csv")
+
 head(data)
 str(data)
 dim(data)
 ```
 
-Berdasarkan hasil fungsi `dim()`, dataset terdiri dari 2.500 observasi dan 13 variabel. Variabel `wilayah`, `provinsi`, dan `catatan_data` bertipe karakter, sedangkan variabel lainnya bertipe numerik yang digunakan dalam analisis statistik.
+Berdasarkan hasil fungsi `dim()`, dataset terdiri dari 2.500 observasi dan 13 variabel.
 
 ## 2.2 Tools yang Digunakan
 
-Analisis data pada penelitian ini dilakukan menggunakan beberapa perangkat lunak dan pustaka (library) yang mendukung proses pengolahan, analisis, dan visualisasi data. Adapun tools yang digunakan adalah sebagai berikut:
-
 ### 2.2.1 R
 
-R merupakan bahasa pemrograman yang banyak digunakan dalam bidang statistika, data science, dan analisis data. R menyediakan berbagai fungsi untuk melakukan pengolahan data, perhitungan statistik, visualisasi, serta pemodelan data secara efisien.
+R digunakan sebagai bahasa pemrograman utama untuk melakukan analisis data statistik dan visualisasi.
 
 ### 2.2.2 RStudio
 
-RStudio merupakan Integrated Development Environment (IDE) yang dirancang untuk mempermudah penggunaan bahasa pemrograman R. RStudio menyediakan fitur penulisan kode, manajemen proyek, visualisasi grafik, dan pembuatan laporan secara terintegrasi.
+RStudio digunakan sebagai Integrated Development Environment (IDE) untuk mempermudah proses analisis.
 
 ### 2.2.3 Quarto
 
-Quarto digunakan sebagai alat untuk menyusun laporan analisis data dalam format yang terstruktur dan reproducible. Quarto memungkinkan penggabungan teks, kode program R, output analisis, tabel, dan grafik dalam satu dokumen sehingga hasil analisis dapat didokumentasikan secara sistematis.
+Quarto digunakan untuk menyusun laporan dalam format PDF yang terintegrasi dengan kode R.
 
-### 2.2.4Library dplyr
+### 2.2.4 Library dplyr
 
-Library **dplyr** digunakan untuk mempermudah proses manipulasi dan transformasi data. Beberapa fungsi yang digunakan antara lain untuk melakukan pemilihan variabel, penyaringan data, serta pengolahan data sebelum dilakukan analisis statistik.
+Library **dplyr** digunakan untuk manipulasi dan transformasi data.
 
 ### 2.2.5 Library ggplot2
 
-Library **ggplot2** digunakan untuk membuat visualisasi data yang informatif dan mudah dipahami. Library ini menyediakan berbagai jenis grafik yang dapat digunakan untuk mengeksplorasi pola data, distribusi data, serta hubungan antar variabel.
+Library **ggplot2** digunakan untuk membuat visualisasi data.
 
 ### 2.2.6 Dataset Pembangunan Wilayah
 
-Dataset yang digunakan adalah **pembangunan_wilayah_missing_outlier.csv**, yang berisi berbagai indikator pembangunan wilayah seperti PDRB per kapita, tingkat kemiskinan, tingkat pengangguran, IPM, harapan hidup, rata-rata lama sekolah, akses internet, kondisi jalan baik, dan akses air bersih. Dataset ini digunakan sebagai objek utama dalam seluruh proses analisis.
+Dataset pembangunan wilayah digunakan sebagai objek utama dalam proses analisis.
 
 ## 2.3 Metode Analisis
 
 ### 2.3.1 Analisis Statistika Deskriptif
 
-Statistika deskriptif digunakan untuk menggambarkan karakteristik umum data melalui ukuran pemusatan dan penyebaran data. Analisis ini bertujuan memberikan gambaran awal mengenai kondisi data sebelum dilakukan analisis lebih lanjut.
-
-Pada penelitian ini, statistika deskriptif dihitung menggunakan fungsi `summary()`, `mean()`, `median()`, `quantile()`, `sd()`, dan `var()` pada seluruh variabel numerik.
-
 ```{r}
 data_num <- data[sapply(data, is.numeric)]
-summary(data_num) 
+
+summary(data_num)
 ```
-
-Fungsi `summary()` menghasilkan informasi berupa nilai minimum, kuartil pertama (Q1), median, rata-rata (mean), kuartil ketiga (Q3), dan maksimum untuk setiap variabel numerik. Hasil ini digunakan untuk mengetahui karakteristik dasar data serta mendeteksi kemungkinan adanya nilai ekstrem.
-
-Selanjutnya dilakukan perhitungan mean, median, standar deviasi, varians, dan kuartil untuk memperoleh informasi yang lebih rinci mengenai pusat dan penyebaran data.
 
 ### 2.3.2 Analisis Missing Value
-
-Analisis missing value dilakukan untuk mengidentifikasi keberadaan data yang hilang pada dataset. Missing value dapat menyebabkan hasil analisis menjadi bias apabila tidak ditangani dengan tepat.
-
-Identifikasi missing value dilakukan menggunakan fungsi `is.na()` dan `colSums()`.
-
-```{r}
-total_missing <- sum(is.na(data_num));
-missing_value <- data.frame(
-  Missing = colSums(is.na(data_num))
-)
-```
-
-Fungsi `is.na()` digunakan untuk mendeteksi nilai yang hilang, sedangkan `colSums()` digunakan untuk menghitung jumlah missing value pada setiap variabel.
-
-Hasil analisis menunjukkan bahwa terdapat beberapa variabel yang memiliki missing value sehingga diperlukan proses penanganan data.
-
-Penanganan missing value dilakukan menggunakan metode **Median Imputation**, yaitu mengganti nilai yang hilang dengan nilai median dari variabel terkait.
-
-```{r}
-for(i in names(data_num)){   data[[i]][is.na(data[[i]])] <- median(data[[i]], na.rm = TRUE) } 
-```
-
-Metode median dipilih karena lebih robust terhadap outlier dibandingkan metode mean imputation.
-
-### 2.3.3 Analisis Outlier
-
-Outlier merupakan data yang memiliki nilai jauh berbeda dibandingkan mayoritas data lainnya. Analisis outlier dilakukan menggunakan metode **Interquartile Range (IQR)**.
-
-Metode IQR dipilih karena sederhana, mudah diinterpretasikan, dan tidak terlalu sensitif terhadap distribusi data.
-
-Rumus yang digunakan adalah:
-
-- IQR = Q3 − Q1
-
-- Batas bawah = Q1 − 1,5 × IQR
-
-- Batas atas = Q3 + 1,5 × IQR
-
-Implementasi metode IQR dalam R dilakukan menggunakan fungsi `IQR()` dan `quantile()`.
-
-```{r}
-IQR_PDRB <- IQR(data$pdrb_perkapita, na.rm = TRUE) 
-```
-
-Fungsi `IQR()` digunakan untuk menghitung rentang antar kuartil, sedangkan `quantile()` digunakan untuk memperoleh nilai kuartil pertama dan kuartil ketiga.
-
-Selain menggunakan metode IQR, identifikasi outlier juga dilakukan secara visual menggunakan boxplot.
-
-```{r}
-boxplot(data$pdrb_perkapita) 
-```
-
-Boxplot digunakan untuk menampilkan distribusi data dan menunjukkan observasi yang berada di luar batas normal sebagai outlier.
-
-Hasil analisis menunjukkan bahwa terdapat sejumlah outlier pada variabel PDRB per kapita, kemiskinan, dan pengangguran.
-
-### 2.3.4 Analisis Visualisasi Data
-
-Visualisasi data dilakukan untuk mempermudah pemahaman terhadap pola dan karakteristik data.
-
-Visualisasi dibuat menggunakan package `ggplot2`.
-
-Histogram digunakan untuk melihat distribusi data.
-
-```{r}
-library(dplyr)
-library(ggplot2)
-ggplot(data, aes(x = pdrb_perkapita)) +   geom_histogram() 
-```
-
-Hasil histogram menunjukkan persebaran nilai PDRB per kapita pada seluruh wilayah pengamatan.
-
-Scatter plot digunakan untuk melihat hubungan antara tingkat kemiskinan dan pengangguran.
-
-```{r}
-ggplot(data,        aes(x = kemiskinan,            y = pengangguran)) +   geom_point() 
-```
-
-Grafik ini menunjukkan pola hubungan antara kedua variabel sehingga dapat digunakan sebagai dasar analisis hubungan antar indikator pembangunan.
-
-Bar chart digunakan untuk membandingkan rata-rata indikator pembangunan, sedangkan pie chart digunakan untuk melihat proporsi kategori pada variabel `catatan_data`.
-
-### 2.3.5 Analisis Distribusi Data
-
-Analisis distribusi data dilakukan menggunakan **Uji Normalitas Shapiro-Wilk**. Tujuan pengujian ini adalah untuk mengetahui apakah data mengikuti distribusi normal atau tidak.
-
-Implementasi dilakukan menggunakan fungsi `shapiro.test()`.
-
-```{r}
-shapiro.test(data$pdrb_perkapita) 
-```
-
-Fungsi tersebut menghasilkan nilai statistik W dan p-value. Nilai p-value digunakan sebagai dasar pengambilan keputusan.
-
-- Jika p-value \> 0,05 maka data dianggap berdistribusi normal.
-
-- Jika p-value ≤ 0,05 maka data dianggap tidak berdistribusi normal.
-
-Hasil pengujian digunakan untuk menentukan kesesuaian metode statistik yang akan digunakan pada analisis lanjutan.
-
-# BAB III. HASIL DAN PEMBAHASAN
-
-## 3.1 Statistika Deskriptif
-
-Analisis statistika deskriptif dilakukan untuk memberikan gambaran umum mengenai karakteristik data pembangunan wilayah yang digunakan. Statistik yang dihitung meliputi nilai rata-rata (mean), nilai minimum, kuartil pertama (Q1), median, kuartil ketiga (Q3), nilai maksimum, standar deviasi, dan varians.
-
-```{r}
-summary(data_num)
-
-statistik <- data.frame(
-  Mean    = sapply(data_num, mean, na.rm = TRUE),
-  Min     = sapply(data_num, min, na.rm = TRUE),
-  Q1      = sapply(data_num, quantile, probs = 0.25, na.rm = TRUE),
-  Median  = sapply(data_num, median, na.rm = TRUE),
-  Q3      = sapply(data_num, quantile, probs = 0.75, na.rm = TRUE),
-  Max     = sapply(data_num, max, na.rm = TRUE),
-  SD      = sapply(data_num, sd, na.rm = TRUE),
-  Varians = sapply(data_num, var, na.rm = TRUE)
-)
-
-round(statistik,0)
-```
-Berdasarkan hasil statistika deskriptif, setiap indikator pembangunan memiliki karakteristik yang berbeda. Variabel PDRB per kapita menunjukkan variasi yang sangat besar dibandingkan variabel lainnya, ditunjukkan oleh nilai standar deviasi yang tinggi. Sementara itu, variabel seperti IPM, harapan hidup, dan rata-rata lama sekolah memiliki penyebaran data yang relatif lebih stabil. Hasil ini menunjukkan adanya perbedaan tingkat pembangunan antarwilayah yang cukup signifikan.
-
----
-
-## 3.2 Analisis Missing Value
-
-Analisis missing value dilakukan untuk mengetahui jumlah data yang hilang pada setiap variabel.
 
 ```{r}
 total_missing <- sum(is.na(data_num))
@@ -243,10 +151,10 @@ missing_value <- data.frame(
   Missing = colSums(is.na(data_num))
 )
 
-total_missing
 missing_value
 ```
-Hasil analisis menunjukkan bahwa terdapat sejumlah data yang hilang pada beberapa variabel. Missing value dapat memengaruhi hasil analisis statistik apabila tidak ditangani dengan baik. Oleh karena itu, dilakukan imputasi menggunakan nilai median pada setiap variabel numerik.
+
+Imputasi dilakukan menggunakan median.
 
 ```{r}
 for(i in names(data_num)){
@@ -254,24 +162,81 @@ for(i in names(data_num)){
 }
 ```
 
-Metode median dipilih karena lebih tahan terhadap pengaruh outlier dibandingkan rata-rata (mean).
+### 2.3.3 Analisis Outlier
 
----
+Metode yang digunakan adalah Interquartile Range (IQR).
 
-## 3.3 Analisis Outlier
+```{r}
+IQR_PDRB <- IQR(data$pdrb_perkapita, na.rm = TRUE)
+IQR_PDRB
+```
 
-Analisis outlier dilakukan menggunakan metode Interquartile Range (IQR) untuk mendeteksi data yang berada jauh di luar rentang mayoritas data.
-
-### Outlier PDRB Per Kapita
+Visualisasi outlier:
 
 ```{r}
 boxplot(data$pdrb_perkapita,
-        main = "PDRB per Kapita",
+        main = "Outlier PDRB Per Kapita",
+        col = "forestgreen")
+```
+
+### 2.3.4 Analisis Visualisasi Data
+
+Visualisasi dilakukan menggunakan package ggplot2.
+
+### 2.3.5 Analisis Distribusi Data
+
+Distribusi data diuji menggunakan metode Shapiro-Wilk.
+
+```{r}
+shapiro.test(data$pdrb_perkapita)
+```
+
+# BAB III HASIL DAN PEMBAHASAN
+
+## 3.1 Statistika Deskriptif
+
+```{r}
+statistik <- data.frame(
+  Mean = sapply(data_num, mean, na.rm = TRUE),
+  Min = sapply(data_num, min, na.rm = TRUE),
+  Q1 = sapply(data_num, quantile, probs = 0.25, na.rm = TRUE),
+  Median = sapply(data_num, median, na.rm = TRUE),
+  Q3 = sapply(data_num, quantile, probs = 0.75, na.rm = TRUE),
+  Max = sapply(data_num, max, na.rm = TRUE),
+  SD = sapply(data_num, sd, na.rm = TRUE),
+  Varians = sapply(data_num, var, na.rm = TRUE)
+)
+
+round(statistik, 2)
+```
+
+**Interpretasi**
+
+Variabel PDRB per kapita memiliki tingkat variasi paling tinggi dibandingkan variabel lainnya. Sementara itu, variabel IPM, harapan hidup, dan rata-rata lama sekolah menunjukkan penyebaran data yang lebih stabil.
+
+## 3.2 Analisis Missing Value
+
+```{r}
+total_missing
+missing_value
+```
+
+**Interpretasi**
+
+Terdapat sejumlah data yang hilang pada beberapa variabel dan telah ditangani menggunakan metode median imputation.
+
+## 3.3 Analisis Outlier
+
+### PDRB Per Kapita
+
+```{r}
+boxplot(data$pdrb_perkapita,
+        main = "PDRB Per Kapita",
         ylab = "Nominal (Rp)",
         col = "forestgreen")
 ```
 
-### Outlier Kemiskinan
+### Kemiskinan
 
 ```{r}
 boxplot(data$kemiskinan,
@@ -280,7 +245,7 @@ boxplot(data$kemiskinan,
         col = "firebrick")
 ```
 
-### Outlier Pengangguran
+### Pengangguran
 
 ```{r}
 boxplot(data$pengangguran,
@@ -288,17 +253,18 @@ boxplot(data$pengangguran,
         ylab = "Persentase (%)",
         col = "tomato")
 ```
-Berdasarkan metode IQR, ditemukan beberapa data yang tergolong outlier pada variabel PDRB per kapita, kemiskinan, dan pengangguran. Keberadaan outlier menunjukkan adanya wilayah yang memiliki kondisi pembangunan sangat berbeda dibandingkan mayoritas wilayah lainnya. Pada variabel PDRB per kapita, outlier menunjukkan wilayah dengan aktivitas ekonomi yang jauh lebih tinggi. Sementara pada variabel kemiskinan dan pengangguran, outlier mengindikasikan wilayah yang menghadapi tantangan sosial ekonomi yang lebih besar dibanding wilayah lain.
 
----
+**Interpretasi**
+
+Ditemukan beberapa outlier yang menunjukkan adanya kesenjangan kondisi pembangunan antarwilayah.
 
 ## 3.4 Visualisasi Data
-
-Visualisasi dilakukan untuk mempermudah pemahaman terhadap pola dan distribusi data.
 
 ### Histogram PDRB Per Kapita
 
 ```{r}
+library(ggplot2)
+
 ggplot(data, aes(x = pdrb_perkapita)) +
   geom_histogram(
     bins = 30,
@@ -307,12 +273,11 @@ ggplot(data, aes(x = pdrb_perkapita)) +
   ) +
   labs(
     title = "Distribusi PDRB Per Kapita",
-    x = "PDRB Per Kapita (Rp)",
+    x = "PDRB Per Kapita",
     y = "Frekuensi"
   ) +
   theme_minimal()
 ```
-Distribusi PDRB per kapita cenderung menceng ke kanan (right skewed) yang menunjukkan terdapat beberapa wilayah dengan nilai PDRB jauh di atas rata-rata.
 
 ### Histogram Kemiskinan
 
@@ -323,14 +288,8 @@ ggplot(data, aes(x = kemiskinan)) +
     fill = "tomato",
     color = "black"
   ) +
-  labs(
-    title = "Distribusi Tingkat Kemiskinan",
-    x = "Persentase Kemiskinan (%)",
-    y = "Frekuensi"
-  ) +
   theme_minimal()
 ```
-Sebagian besar wilayah memiliki tingkat kemiskinan pada kategori rendah hingga sedang, sementara hanya sedikit wilayah yang memiliki tingkat kemiskinan sangat tinggi.
 
 ### Scatter Plot Kemiskinan dan Pengangguran
 
@@ -339,81 +298,12 @@ ggplot(data,
        aes(x = kemiskinan,
            y = pengangguran)) +
   geom_point(color = "blue") +
-  labs(
-    title = "Hubungan Kemiskinan dan Pengangguran",
-    x = "Kemiskinan (%)",
-    y = "Pengangguran (%)"
-  ) +
   theme_minimal()
 ```
-Terdapat kecenderungan hubungan positif antara tingkat kemiskinan dan tingkat pengangguran. Wilayah dengan tingkat kemiskinan tinggi umumnya memiliki tingkat pengangguran yang lebih tinggi.
-
-### Diagram Batang Rata-rata Indikator Pembangunan
-
-```{r}
-rata_rata <- data.frame(
-  Variabel = c(
-    "Kemiskinan",
-    "Pengangguran",
-    "IPM",
-    "Harapan Hidup",
-    "Internet",
-    "Jalan Baik",
-    "Air Bersih"
-  ),
-  Mean = c(
-    mean(data$kemiskinan, na.rm = TRUE),
-    mean(data$pengangguran, na.rm = TRUE),
-    mean(data$ipm, na.rm = TRUE),
-    mean(data$harapan_hidup, na.rm = TRUE),
-    mean(data$akses_internet, na.rm = TRUE),
-    mean(data$jalan_baik, na.rm = TRUE),
-    mean(data$air_bersih, na.rm = TRUE)
-  )
-)
-
-rata_rata
-ggplot(rata_rata,
-       aes(x = Variabel,
-           y = Mean)) +
-  geom_bar(stat = "identity",
-           fill = "steelblue") +
-  theme_minimal()
-```
-Diagram menunjukkan perbandingan nilai rata-rata antarindikator pembangunan sehingga memudahkan identifikasi indikator dengan nilai tertinggi maupun terendah.
-
-### Diagram Lingkaran Status Data
-
-```{r}
-status <- as.data.frame(table(data$catatan_data))
-
-status$Persentase <- round(
-  (status$Freq / sum(status$Freq)) * 100,
-  1
-)
-
-status$Label <- paste0(status$Persentase, "%")
-
-status
-ggplot(status,
-       aes(x = "",
-           y = Freq,
-           fill = Var1)) +
-  geom_bar(width = 1,
-           stat = "identity") +
-  coord_polar("y")
-```
-Diagram lingkaran menunjukkan proporsi status data berdasarkan kategori yang tersedia pada variabel `catatan_data`.
-
----
 
 ## 3.5 Analisis Distribusi Data
 
-Uji normalitas dilakukan menggunakan metode Shapiro-Wilk.
-
 ```{r}
-data_num <- data[sapply(data, is.numeric)]
-
 hasil_normalitas <- data.frame(
   Variabel = names(data_num),
   P_Value = sapply(
@@ -423,120 +313,62 @@ hasil_normalitas <- data.frame(
 )
 
 hasil_normalitas
-hasil_normalitas
 ```
-Berdasarkan hasil uji Shapiro-Wilk, nilai p-value pada masing-masing variabel dibandingkan dengan tingkat signifikansi 0,05.
 
-Kriteria pengambilan keputusan:
+**Interpretasi**
 
-* Jika p-value > 0,05 maka data berdistribusi normal.
-* Jika p-value ≤ 0,05 maka data tidak berdistribusi normal.
-
-Dari hasil pengujian diperoleh bahwa sebagian besar variabel memiliki nilai p-value kurang dari 0,05 sehingga data cenderung tidak berdistribusi normal. Hal ini menunjukkan bahwa distribusi data pembangunan wilayah masih memiliki penyimpangan dari distribusi normal, yang dapat dipengaruhi oleh adanya outlier dan ketimpangan antarwilayah.
-
-### Q-Q Plot Kemiskinan
-
-```{r}
-qqnorm(data$kemiskinan,
-       main = "Q-Q Plot Uji Normalitas Kemiskinan")
-qqline(data$kemiskinan,
-       col = "red")
-```
-Jika titik-titik mengikuti garis diagonal maka distribusi mendekati normal. 
-Sebaliknya, penyimpangan yang cukup jauh dari garis menunjukkan data tidak berdistribusi normal.
-
----
+Sebagian besar variabel memiliki nilai p-value < 0,05 sehingga tidak berdistribusi normal.
 
 ## 3.6 Analisis Korelasi
 
-Analisis korelasi digunakan untuk mengetahui kekuatan dan arah hubungan antarvariabel.
-
-### Matriks Korelasi
-
 ```{r}
-korelasi <- cor(data_num,
-                use = "complete.obs",
-                method = "pearson")
+korelasi <- cor(
+  data_num,
+  use = "complete.obs",
+  method = "pearson"
+)
 
 korelasi
 ```
 
-### Korelasi IPM dan Kemiskinan
+**Interpretasi**
 
-```{r}
-cor.test(data$ipm,
-         data$kemiskinan)
-```
-Hubungan antara IPM dan kemiskinan umumnya bersifat negatif. Semakin tinggi nilai IPM suatu wilayah, 
-maka tingkat kemiskinannya cenderung semakin rendah.
+Indikator ekonomi, pendidikan, dan teknologi menunjukkan hubungan yang saling berkaitan dalam mendukung pembangunan wilayah.
 
-### Korelasi Akses Internet dan Pendidikan
-
-```{r}
-cor.test(data$akses_internet,
-         data$rata_lama_sekolah)
-```
-Hubungan positif menunjukkan bahwa wilayah dengan akses internet yang 
-lebih baik cenderung memiliki rata-rata lama sekolah yang lebih tinggi.
-
-### Korelasi PDRB Per Kapita dan IPM
-
-```{r}
-cor.test(data$pdrb_perkapita,
-         data$ipm)
-```
-Hubungan positif menunjukkan bahwa peningkatan tingkat kesejahteraan ekonomi
-cenderung diikuti oleh peningkatan kualitas pembangunan manusia yang tercermin melalui nilai IPM.
-
-Secara umum, hasil korelasi menunjukkan bahwa indikator ekonomi, pendidikan, 
-dan teknologi saling berkaitan dalam mendukung pembangunan wilayah yang lebih baik.
-
-# BAB IV. KESIMPULAN
+# BAB IV KESIMPULAN
 
 ## 4.1 Kesimpulan Utama
 
-Berdasarkan hasil analisis data pembangunan wilayah menggunakan bahasa pemrograman R, diperoleh beberapa kesimpulan sebagai berikut:
-
-1. Dataset yang digunakan terdiri dari 2.500 observasi dan 13 variabel yang mencakup indikator ekonomi, sosial, pendidikan, kesehatan, dan infrastruktur wilayah.
-
-2. Analisis statistika deskriptif menunjukkan bahwa setiap variabel memiliki karakteristik yang berbeda. Variabel PDRB per kapita memiliki tingkat variasi yang paling tinggi dibandingkan variabel lainnya, yang menunjukkan adanya perbedaan tingkat aktivitas ekonomi antarwilayah.
-
-3. Ditemukan sejumlah missing value pada beberapa variabel numerik. Missing value tersebut berhasil ditangani menggunakan metode median imputation sehingga dataset dapat digunakan untuk analisis lanjutan tanpa kehilangan observasi.
-
-4. Analisis outlier menggunakan metode Interquartile Range (IQR) menunjukkan adanya data ekstrem pada beberapa variabel, terutama PDRB per kapita, kemiskinan, dan pengangguran. Outlier tersebut mencerminkan adanya wilayah yang memiliki karakteristik pembangunan yang berbeda secara signifikan dibandingkan wilayah lainnya.
-
-5. Hasil visualisasi data menunjukkan bahwa distribusi beberapa variabel tidak merata dan cenderung memiliki kemencengan (skewness). Selain itu, visualisasi juga memperlihatkan adanya hubungan antara beberapa indikator pembangunan seperti kemiskinan dan pengangguran.
-
-6. Berdasarkan uji normalitas Shapiro-Wilk, sebagian besar variabel numerik tidak berdistribusi normal karena memiliki nilai p-value yang lebih kecil dari 0,05.
-
-7. Hasil analisis korelasi menunjukkan bahwa terdapat hubungan antarindikator pembangunan wilayah. IPM cenderung memiliki hubungan negatif dengan kemiskinan, sedangkan akses internet dan PDRB per kapita menunjukkan hubungan positif terhadap indikator pembangunan manusia.
+1. Dataset terdiri dari 2.500 observasi dan 13 variabel.
+2. PDRB per kapita memiliki variasi paling tinggi.
+3. Missing value berhasil ditangani menggunakan median imputation.
+4. Terdapat outlier pada variabel PDRB per kapita, kemiskinan, dan pengangguran.
+5. Sebagian besar variabel tidak berdistribusi normal.
+6. Terdapat hubungan antarindikator pembangunan wilayah.
 
 ## 4.2 Insight
 
-Berdasarkan hasil analisis yang telah dilakukan, terdapat beberapa insight yang dapat diperoleh:
-
-1. Pembangunan wilayah tidak hanya dipengaruhi oleh faktor ekonomi, tetapi juga oleh faktor pendidikan, kesehatan, dan infrastruktur yang saling berkaitan.
-
-2. Wilayah dengan tingkat akses internet yang lebih baik cenderung memiliki tingkat pendidikan yang lebih tinggi, yang menunjukkan pentingnya pemerataan akses teknologi sebagai pendukung pembangunan sumber daya manusia.
-
-3. Tingkat kemiskinan dan pengangguran menunjukkan kecenderungan bergerak searah. Oleh karena itu, upaya pengurangan kemiskinan perlu disertai dengan peningkatan kesempatan kerja yang memadai.
-
-4. Tingginya nilai PDRB per kapita pada suatu wilayah tidak selalu menggambarkan kondisi pembangunan yang merata. Oleh karena itu, evaluasi pembangunan perlu mempertimbangkan berbagai indikator secara bersamaan.
-
-5. Keberadaan outlier pada beberapa variabel menunjukkan adanya kesenjangan pembangunan antarwilayah yang masih cukup besar sehingga memerlukan perhatian dalam perencanaan pembangunan.
+1. Pembangunan wilayah dipengaruhi oleh faktor ekonomi, pendidikan, kesehatan, dan infrastruktur.
+2. Akses internet yang baik berkaitan dengan tingkat pendidikan yang lebih tinggi.
+3. Kemiskinan dan pengangguran memiliki kecenderungan hubungan positif.
+4. Tingginya PDRB tidak selalu mencerminkan pembangunan yang merata.
+5. Masih terdapat kesenjangan pembangunan antarwilayah.
 
 ## 4.3 Saran
 
-Berdasarkan hasil analisis yang telah dilakukan, beberapa saran yang dapat diberikan adalah sebagai berikut:
+1. Pemerintah perlu memperhatikan seluruh indikator pembangunan secara menyeluruh.
+2. Pemerataan akses internet dan pendidikan perlu ditingkatkan.
+3. Wilayah dengan kemiskinan dan pengangguran tinggi perlu menjadi prioritas pembangunan.
+4. Penelitian selanjutnya dapat menggunakan regresi, clustering, atau machine learning.
+5. Analisis dapat dikembangkan menggunakan data time series.
 
-1. Pemerintah dan pemangku kebijakan perlu memperhatikan indikator pembangunan secara menyeluruh, tidak hanya berfokus pada pertumbuhan ekonomi tetapi juga pada aspek pendidikan, kesehatan, dan infrastruktur.
+# LAMPIRAN
 
-2. Peningkatan akses internet dan kualitas pendidikan perlu terus dilakukan karena keduanya memiliki hubungan yang positif dalam mendukung pembangunan sumber daya manusia.
+## Lampiran A. Script R
 
-3. Wilayah yang memiliki tingkat kemiskinan dan pengangguran tinggi perlu menjadi prioritas dalam program pembangunan dan pemberdayaan masyarakat.
+Seluruh script R yang digunakan pada penelitian ini dilampirkan pada bagian ini.
 
-4. Pada penelitian selanjutnya dapat dilakukan analisis yang lebih mendalam menggunakan metode regresi, clustering, atau machine learning untuk memperoleh informasi yang lebih komprehensif mengenai faktor-faktor yang memengaruhi pembangunan wilayah.
+## Lampiran B. Output Tambahan
 
-5. Penelitian berikutnya juga dapat menggunakan data dengan periode waktu yang lebih panjang sehingga dapat dianalisis perkembangan pembangunan wilayah dari waktu ke waktu.
-
+Berisi tabel, grafik, dan hasil analisis tambahan yang mendukung pembahasan penelitian.
 
