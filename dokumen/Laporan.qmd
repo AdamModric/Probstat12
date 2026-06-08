@@ -1,64 +1,63 @@
 ---
-output:
-  word_document: default
-  html_document: default
----
----
 title: ""
 format:
-pdf:
-toc: true
-toc-depth: 3
-number-sections: true
-colorlinks: true
-geometry:
-- top=3cm
-- bottom=3cm
-- left=3cm
-- right=3cm
------------
+  pdf:
+    toc: false
+    colorlinks: true
+    geometry:
+      - top=3cm
+      - bottom=3cm
+      - left=3cm
+      - right=3cm
+---
 
+\begin{titlepage}
 \begin{center}
 
-\includegraphics[width=3cm]{LOGO.png}
+
 
 \vspace{1cm}
 
-{\Large \textbf{LAPORAN PROYEK AKHIR}} \
+{\Large\bfseries LAPORAN PROYEK AKHIR}
 
 \vspace{0.5cm}
 
-{\Large \textbf{ANALISIS DATA PEMBANGUNAN WILAYAH MENGGUNAKAN R}}
+{\Large\bfseries ANALISIS DATA PEMBANGUNAN WILAYAH MENGGUNAKAN R}
 
-\vspace{1.5cm}
+\vspace{2cm}
+
+\includegraphics[width=3cm]{Logo.png}
+
+\vspace{2cm}
 
 Disusun oleh:
 
 \vspace{0.5cm}
 
 \begin{tabular}{ll}
-Adam Mudrika Malik & J0403251079 \
-Mufidah Ziyanisa & J0403251014 \
-Kenny Immanuel & J0403241012 \
+Adam Mudrika Malik & J0403251079 \\
+Mufidah Ziyanisa & J0403251014 \\
+Kenny Immanuel & J0403241012 \\
 \end{tabular}
 
-\vspace{1.5cm}
+\vfill
 
 Mata Kuliah Probabilitas dan Statistika
 
 Program Studi D4 Teknologi Rekayasa Perangkat Lunak
 
-\vspace{1cm}
-
 Fakultas Vokasi
 
 Institut Pertanian Bogor
 
-\vspace{1cm}
+\vspace{0.5cm}
 
 Tahun Akademik 2025/2026
 
 \end{center}
+\end{titlepage}
+
+\tableofcontents
 
 \newpage
 
@@ -97,7 +96,7 @@ Dataset yang digunakan dalam penelitian ini adalah **pembangunan_wilayah_missing
 Variabel yang terdapat dalam dataset meliputi wilayah, provinsi, tahun pengamatan, PDRB per kapita, tingkat kemiskinan, tingkat pengangguran, IPM, harapan hidup, rata-rata lama sekolah, akses internet, kondisi jalan baik, dan akses air bersih.
 
 ```{r}
-data <- read.csv("pembangunan_wilayah_missing_outlier.csv")
+data <- read.csv("dataset/pembangunan_wilayah_missing_outlier.csv")
 
 head(data)
 str(data)
