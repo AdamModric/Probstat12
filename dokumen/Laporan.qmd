@@ -1,5 +1,5 @@
 ---
-title: "Laporan"
+title: "Analisis Deskriptif dan Probabilitas Indikator Pembangunan Wilayah di Indonesia"
 format: html
 editor: visual
 ---
