@@ -86,23 +86,143 @@ boxplot(data$air_bersih,
         ylab  = "Persentase (%)",
         col = "dodgerblue")
 
-sapply(data_num, hitung_outlier)
+data <- read.csv("dataset/pembangunan_wilayah_missing_outlier.csv")
 
-hitung_outlier <- function(x){
-  
-  Q1 <- quantile(x, 0.25, na.rm = TRUE)
-  Q3 <- quantile(x, 0.75, na.rm = TRUE)
-  
-  IQR_value <- IQR(x, na.rm = TRUE)
-  
-  lower <- Q1 - 1.5 * IQR_value
-  upper <- Q3 + 1.5 * IQR_value
-  
-  sum(x < lower | x > upper, na.rm = TRUE)
-}
+IQR_PDRB <- IQR(data$pdrb_perkapita, na.rm = TRUE)
+pdrb_bawah <- quantile(data$pdrb_perkapita, 0.25, na.rm = TRUE)-(1.5*IQR_PDRB)
+pdrb_atas  <- quantile(data$pdrb_perkapita, 0.75, na.rm = TRUE)+(1.5*IQR_PDRB)
+outlier_pdrb <- data$pdrb_perkapita[which(data$pdrb_perkapita < pdrb_bawah | data$pdrb_perkapita > pdrb_atas)]
+length(outlier_pdrb)
+outlier_pdrb
 
-iqr_pdrb <- IQR(data$pdrb_perkapita)
-batas_bawah <- quantile(data$pdrb_perkapita, 0.25) - (1.5 * iqr_pdrb)
-batas_atas <- quantile(data$pdrb_perkapita, 0.75) + (1.5 * iqr_pdrb)
-data <- data %>%
-  filter(pdrb_perkapita >= batas_bawah & pdrb_perkapita <= batas_atas)
+outliner_wilayah_pdrb <- data[which(data$pdrb_perkapita < pdrb_bawah | data$pdrb_perkapita > pdrb_atas), ]
+outliner_wilayah_pdrb[, c("wilayah",
+                          "provinsi",
+                          "tahun",
+                          "pdrb_perkapita")]
+
+IQR_Kemiskinan <- IQR(data$kemiskinan, na.rm = TRUE)
+miskin_bawah <- quantile(data$kemiskinan, 0.25, na.rm = TRUE)-(1.5*IQR_Kemiskinan)
+miskin_atas <- quantile(data$kemiskinan, 0.75, na.rm = TRUE)+(1.5*IQR_Kemiskinan)
+outliner_kemiskinan <- data$kemiskinan[which(data$kemiskinan < miskin_bawah | data$kemiskinan > miskin_atas)]
+length(outliner_kemiskinan)
+outliner_kemiskinan
+
+outliner_wilayah_kemiskinan <- data[which(data$kemiskinan < miskin_bawah | data$kemiskinan > miskin_atas), ]
+outliner_wilayah_kemiskinan[, c("wilayah",
+                                "provinsi",
+                                "tahun",
+                                "kemiskinan")]
+
+IQR_pengangguran <- IQR(data$pengangguran, na.rm = TRUE)
+nganggur_bawah <- quantile(data$pengangguran, 0.25, na.rm = TRUE)-(1.5*IQR_pengangguran)
+nganggur_atas <- quantile(data$pengangguran, 0.75, na.rm = TRUE)+(1.5*IQR_pengangguran)
+outliner_pengangguran <- data$pengangguran[which(data$pengangguran < nganggur_bawah | data$pengangguran > nganggur_atas)]
+length(outliner_pengangguran)
+outliner_pengangguran
+
+outliner_wilayah_pengangguran <- data[which(data$pengangguran < nganggur_bawah | data$pengangguran > nganggur_atas), ]
+outliner_wilayah_pengangguran[, c("wilayah",
+                                  "provinsi",
+                                  "tahun",
+                                  "pengangguran")]
+
+#visualisasi data
+#Histogram
+ggplot(data, aes(x = pdrb_perkapita)) +
+  geom_histogram(bins = 30,
+                 fill = "forestgreen",
+                 color = "black") +
+  labs(title = "Distribusi PDRB Per Kapita",
+       x = "PDRB Per Kapita (Rp)",
+       y = "Frekuensi"
+  ) +
+  theme_minimal()
+
+ggplot(data, aes(x = kemiskinan)) +
+  geom_histogram(bins = 24,
+                 fill = "tomato",
+                 color = "black") +
+  labs(title = "Distribusi Tingkat Kemiskinan",
+       x = "Persentase Kemiskinan (%)",
+       y = "Frekuensi"
+  ) +
+  theme_minimal()
+
+ggplot(data,
+       aes(x = kemiskinan,
+           y = pengangguran)) +
+  geom_point(color = "blue") +
+  labs(
+    title = "Hubungan Kemiskinan dan Pengangguran",
+    x = "Kemiskinan (%)",
+    y = "Pengangguran (%)"
+  ) +
+  theme_minimal()
+
+rata_rata <- data.frame(
+  Variabel = c("Kemiskinan",
+               "Pengangguran",
+               "IPM",
+               "Harapan Hidup",
+               "Internet",
+               "Jalan Baik",
+               "Air Bersih"),
+  Mean = c(
+    mean(data$kemiskinan, na.rm = TRUE),
+    mean(data$pengangguran, na.rm = TRUE),
+    mean(data$ipm, na.rm = TRUE),
+    mean(data$harapan_hidup, na.rm = TRUE),
+    mean(data$akses_internet, na.rm = TRUE),
+    mean(data$jalan_baik, na.rm = TRUE),
+    mean(data$air_bersih, na.rm = TRUE)
+  )
+)
+
+ggplot(rata_rata,
+       aes(x = Variabel, y = Mean)) +
+  geom_bar(stat = "identity",
+           fill = "steelblue") +
+  labs(title = "Rata-rata Indikator Pembangunan",
+       x = "Variabel",
+       y = "Nilai Rata-rata"
+  ) +
+  theme_minimal()
+
+status <- as.data.frame(table(data$catatan_data))
+status$Persentase <- round((status$Freq / sum(status$Freq)) * 100, 1)
+status$Label <- paste0(status$Persentase, "%")
+
+ggplot(status,
+       aes(x = "",
+           y = Freq,
+           fill = Var1)) +
+  geom_bar(width = 1,
+           stat = "identity",
+           color = "white") +
+  coord_polar("y") +
+  geom_text(aes(label = Label),
+            position = position_stack(vjust = 0.5),
+            color = "black",
+            size = 5) +
+  labs(
+    title = "Proporsi Status Data",
+    fill = "Keterangan"
+  ) +
+  theme_void()
+
+#analisis probabilitas dan distribusi data
+
+shapiro.test(data$pdrb_perkapita)
+shapiro.test(data$kemiskinan)
+shapiro.test(data$pengangguran)
+
+data_num <- data[sapply(data, is.numeric)]
+
+hasil_normalitas <- data.frame(
+  Variabel = names(data_num),
+  P_Value = sapply(data_num, function(x)
+    shapiro.test(na.omit(x))$p.value)
+)
+
+hasil_normalitas
