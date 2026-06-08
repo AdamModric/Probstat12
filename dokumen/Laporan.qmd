@@ -205,3 +205,279 @@ Fungsi tersebut menghasilkan nilai statistik W dan p-value. Nilai p-value diguna
 - Jika p-value ≤ 0,05 maka data dianggap tidak berdistribusi normal.
 
 Hasil pengujian digunakan untuk menentukan kesesuaian metode statistik yang akan digunakan pada analisis lanjutan.
+
+# BAB III. HASIL DAN PEMBAHASAN
+
+## 3.1 Statistika Deskriptif
+
+Analisis statistika deskriptif dilakukan untuk memberikan gambaran umum mengenai karakteristik data pembangunan wilayah yang digunakan. Statistik yang dihitung meliputi nilai rata-rata (mean), nilai minimum, kuartil pertama (Q1), median, kuartil ketiga (Q3), nilai maksimum, standar deviasi, dan varians.
+
+```{r}
+summary(data_num)
+
+statistik <- data.frame(
+  Mean    = sapply(data_num, mean, na.rm = TRUE),
+  Min     = sapply(data_num, min, na.rm = TRUE),
+  Q1      = sapply(data_num, quantile, probs = 0.25, na.rm = TRUE),
+  Median  = sapply(data_num, median, na.rm = TRUE),
+  Q3      = sapply(data_num, quantile, probs = 0.75, na.rm = TRUE),
+  Max     = sapply(data_num, max, na.rm = TRUE),
+  SD      = sapply(data_num, sd, na.rm = TRUE),
+  Varians = sapply(data_num, var, na.rm = TRUE)
+)
+
+round(statistik,0)
+```
+
+### Interpretasi
+
+Berdasarkan hasil statistika deskriptif, setiap indikator pembangunan memiliki karakteristik yang berbeda. Variabel PDRB per kapita menunjukkan variasi yang sangat besar dibandingkan variabel lainnya, ditunjukkan oleh nilai standar deviasi yang tinggi. Sementara itu, variabel seperti IPM, harapan hidup, dan rata-rata lama sekolah memiliki penyebaran data yang relatif lebih stabil. Hasil ini menunjukkan adanya perbedaan tingkat pembangunan antarwilayah yang cukup signifikan.
+
+---
+
+## 3.2 Analisis Missing Value
+
+Analisis missing value dilakukan untuk mengetahui jumlah data yang hilang pada setiap variabel.
+
+```{r}
+total_missing <- sum(is.na(data_num))
+
+missing_value <- data.frame(
+  Missing = colSums(is.na(data_num))
+)
+
+total_missing
+missing_value
+```
+
+### Interpretasi
+
+Hasil analisis menunjukkan bahwa terdapat sejumlah data yang hilang pada beberapa variabel. Missing value dapat memengaruhi hasil analisis statistik apabila tidak ditangani dengan baik. Oleh karena itu, dilakukan imputasi menggunakan nilai median pada setiap variabel numerik.
+
+```{r}
+for(i in names(data_num)){
+  data[[i]][is.na(data[[i]])] <- median(data[[i]], na.rm = TRUE)
+}
+```
+
+Metode median dipilih karena lebih tahan terhadap pengaruh outlier dibandingkan rata-rata (mean).
+
+---
+
+## 3.3 Analisis Outlier
+
+Analisis outlier dilakukan menggunakan metode Interquartile Range (IQR) untuk mendeteksi data yang berada jauh di luar rentang mayoritas data.
+
+### Outlier PDRB Per Kapita
+
+```{r}
+boxplot(data$pdrb_perkapita,
+        main = "PDRB per Kapita",
+        ylab = "Nominal (Rp)",
+        col = "forestgreen")
+```
+
+### Outlier Kemiskinan
+
+```{r}
+boxplot(data$kemiskinan,
+        main = "Kemiskinan",
+        ylab = "Persentase (%)",
+        col = "firebrick")
+```
+
+### Outlier Pengangguran
+
+```{r}
+boxplot(data$pengangguran,
+        main = "Pengangguran",
+        ylab = "Persentase (%)",
+        col = "tomato")
+```
+
+### Interpretasi
+
+Berdasarkan metode IQR, ditemukan beberapa data yang tergolong outlier pada variabel PDRB per kapita, kemiskinan, dan pengangguran. Keberadaan outlier menunjukkan adanya wilayah yang memiliki kondisi pembangunan sangat berbeda dibandingkan mayoritas wilayah lainnya. Pada variabel PDRB per kapita, outlier menunjukkan wilayah dengan aktivitas ekonomi yang jauh lebih tinggi. Sementara pada variabel kemiskinan dan pengangguran, outlier mengindikasikan wilayah yang menghadapi tantangan sosial ekonomi yang lebih besar dibanding wilayah lain.
+
+---
+
+## 3.4 Visualisasi Data
+
+Visualisasi dilakukan untuk mempermudah pemahaman terhadap pola dan distribusi data.
+
+### Histogram PDRB Per Kapita
+
+```{r}
+ggplot(data, aes(x = pdrb_perkapita)) +
+  geom_histogram(
+    bins = 30,
+    fill = "forestgreen",
+    color = "black"
+  ) +
+  labs(
+    title = "Distribusi PDRB Per Kapita",
+    x = "PDRB Per Kapita (Rp)",
+    y = "Frekuensi"
+  ) +
+  theme_minimal()
+```
+
+Interpretasi:
+
+Distribusi PDRB per kapita cenderung menceng ke kanan (right skewed) yang menunjukkan terdapat beberapa wilayah dengan nilai PDRB jauh di atas rata-rata.
+
+### Histogram Kemiskinan
+
+```{r}
+ggplot(data, aes(x = kemiskinan)) +
+  geom_histogram(
+    bins = 24,
+    fill = "tomato",
+    color = "black"
+  ) +
+  labs(
+    title = "Distribusi Tingkat Kemiskinan",
+    x = "Persentase Kemiskinan (%)",
+    y = "Frekuensi"
+  ) +
+  theme_minimal()
+```
+
+Interpretasi:
+
+Sebagian besar wilayah memiliki tingkat kemiskinan pada kategori rendah hingga sedang, sementara hanya sedikit wilayah yang memiliki tingkat kemiskinan sangat tinggi.
+
+### Scatter Plot Kemiskinan dan Pengangguran
+
+```{r}
+ggplot(data,
+       aes(x = kemiskinan,
+           y = pengangguran)) +
+  geom_point(color = "blue") +
+  labs(
+    title = "Hubungan Kemiskinan dan Pengangguran",
+    x = "Kemiskinan (%)",
+    y = "Pengangguran (%)"
+  ) +
+  theme_minimal()
+```
+
+Interpretasi:
+
+Terdapat kecenderungan hubungan positif antara tingkat kemiskinan dan tingkat pengangguran. Wilayah dengan tingkat kemiskinan tinggi umumnya memiliki tingkat pengangguran yang lebih tinggi.
+
+### Diagram Batang Rata-rata Indikator Pembangunan
+
+```{r}
+ggplot(rata_rata,
+       aes(x = Variabel,
+           y = Mean)) +
+  geom_bar(stat = "identity",
+           fill = "steelblue") +
+  theme_minimal()
+```
+
+Interpretasi:
+
+Diagram menunjukkan perbandingan nilai rata-rata antarindikator pembangunan sehingga memudahkan identifikasi indikator dengan nilai tertinggi maupun terendah.
+
+### Diagram Lingkaran Status Data
+
+```{r}
+ggplot(status,
+       aes(x = "",
+           y = Freq,
+           fill = Var1)) +
+  geom_bar(width = 1,
+           stat = "identity") +
+  coord_polar("y")
+```
+
+Interpretasi:
+
+Diagram lingkaran menunjukkan proporsi status data berdasarkan kategori yang tersedia pada variabel `catatan_data`.
+
+---
+
+## 3.5 Analisis Distribusi Data
+
+Uji normalitas dilakukan menggunakan metode Shapiro-Wilk.
+
+```{r}
+hasil_normalitas
+```
+
+### Interpretasi
+
+Berdasarkan hasil uji Shapiro-Wilk, nilai p-value pada masing-masing variabel dibandingkan dengan tingkat signifikansi 0,05.
+
+Kriteria pengambilan keputusan:
+
+* Jika p-value > 0,05 maka data berdistribusi normal.
+* Jika p-value ≤ 0,05 maka data tidak berdistribusi normal.
+
+Dari hasil pengujian diperoleh bahwa sebagian besar variabel memiliki nilai p-value kurang dari 0,05 sehingga data cenderung tidak berdistribusi normal. Hal ini menunjukkan bahwa distribusi data pembangunan wilayah masih memiliki penyimpangan dari distribusi normal, yang dapat dipengaruhi oleh adanya outlier dan ketimpangan antarwilayah.
+
+### Q-Q Plot Kemiskinan
+
+```{r}
+qqnorm(data$kemiskinan,
+       main = "Q-Q Plot Uji Normalitas Kemiskinan")
+qqline(data$kemiskinan,
+       col = "red")
+```
+
+Interpretasi:
+
+Jika titik-titik mengikuti garis diagonal maka distribusi mendekati normal. Sebaliknya, penyimpangan yang cukup jauh dari garis menunjukkan data tidak berdistribusi normal.
+
+---
+
+## 3.6 Analisis Korelasi
+
+Analisis korelasi digunakan untuk mengetahui kekuatan dan arah hubungan antarvariabel.
+
+### Matriks Korelasi
+
+```{r}
+korelasi <- cor(data_num,
+                use = "complete.obs",
+                method = "pearson")
+
+korelasi
+```
+
+### Korelasi IPM dan Kemiskinan
+
+```{r}
+cor.test(data$ipm,
+         data$kemiskinan)
+```
+
+Interpretasi:
+
+Hubungan antara IPM dan kemiskinan umumnya bersifat negatif. Semakin tinggi nilai IPM suatu wilayah, maka tingkat kemiskinannya cenderung semakin rendah.
+
+### Korelasi Akses Internet dan Pendidikan
+
+```{r}
+cor.test(data$akses_internet,
+         data$rata_lama_sekolah)
+```
+
+Interpretasi:
+
+Hubungan positif menunjukkan bahwa wilayah dengan akses internet yang lebih baik cenderung memiliki rata-rata lama sekolah yang lebih tinggi.
+
+### Korelasi PDRB Per Kapita dan IPM
+
+```{r}
+cor.test(data$pdrb_perkapita,
+         data$ipm)
+```
+
+Interpretasi:
+
+Hubungan positif menunjukkan bahwa peningkatan tingkat kesejahteraan ekonomi cenderung diikuti oleh peningkatan kualitas pembangunan manusia yang tercermin melalui nilai IPM.
+
+Secara umum, hasil korelasi menunjukkan bahwa indikator ekonomi, pendidikan, dan teknologi saling berkaitan dalam mendukung pembangunan wilayah yang lebih baik.
